@@ -45,12 +45,27 @@ fun dates_in_months (dates : (int*int*int) list, months : int list) =
     then []
     else dates_in_month(dates, hd months) @ dates_in_months(dates, tl months)
 
-(* 6. *)
+(* 6. Don't need to consider the case where there are too few elements *)
 fun get_nth (strings : string list, n : int) =
     if n <> 1
     then get_nth(tl strings, n - 1)
     else hd strings
-            
+
 (* 7. *)
-   
-  
+fun date_to_string (date : int*int*int) =
+    let
+        val month_strings = [
+            "January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"
+        ]
+    in
+        get_nth(month_strings, #2 date) ^ " " ^ Int.toString(#3 date) ^ ", " ^ Int.toString(#1 date)
+    end
+
+(* 8. Assume the entire list sums to more than the passed in value;
+      it is okay for an exception to occur if this is not the case *)
+fun number_before_reaching_sum (sum : int, ints : int list)=
+    if sum - hd ints <= 0
+    then 0
+    else 1 + number_before_reaching_sum(sum - hd ints, tl ints)
+
