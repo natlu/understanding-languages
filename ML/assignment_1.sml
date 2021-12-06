@@ -76,3 +76,31 @@ fun what_month (day_of_year : int)=
     in
         number_before_reaching_sum(day_of_year, days_in_month) + 1
     end
+
+
+(* 10. *)
+fun month_range (day1 : int, day2 : int) =
+    if day1 > day2
+    then []
+    else what_month(day1) :: month_range(day1 + 1, day2)
+
+(* 11. *)
+fun oldest (dates : (int*int*int) list) =
+    if null dates
+    then NONE
+    else
+        let
+            fun oldest_nonempty (dates : (int*int*int) list) =
+                if null (tl dates)
+                then hd dates
+                else
+                    let val tl_ans = oldest_nonempty(tl dates)
+                    in
+                        if is_older(hd dates, tl_ans)
+                        then hd dates
+                        else tl_ans
+                    end
+        in
+            SOME (oldest_nonempty dates)
+        end
+
