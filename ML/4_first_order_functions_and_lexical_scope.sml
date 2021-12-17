@@ -5,7 +5,9 @@
 
 (* the scope is where the function was defined
    NOT where it was called *)
-(* this is lexical scope *) (* as opposed to dynamic scope *)
+(* this is lexical scope *)
+(* as opposed to dynamic scope where you use the environment where the function is called *)
+(* most languages these days use lexical scope *)
 
 val x = 1
 fun f y = x + y
