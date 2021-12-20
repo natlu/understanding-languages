@@ -12,9 +12,9 @@ val longest_string1 = foldl (fn (s,acc) => if String.size acc >= String.size s t
 val longest_string2 = foldl (fn (s,acc) => if String.size acc > String.size s then acc else s) ""
 
 (* problem 4 *)
-fun longest_string_helper f = foldl (fn (s,acc) => if f(String.size acc, String.size s) then acc else s) ""
-val longest_string3 = longest_string_helper (fn (a,b) => a >= b)
-val longest_string4 = longest_string_helper (fn (a,b) => a > b)
+fun longest_string_helper f = foldl (fn (s,acc) => if f(String.size s, String.size acc) then s else acc) ""
+val longest_string3 = longest_string_helper (fn (a,b) => a > b)
+val longest_string4 = longest_string_helper (fn (a,b) => a >= b)
 
 (* problem 5 *)
 val longest_capitalized = longest_string3 o only_capitals
@@ -85,7 +85,7 @@ val count_wildcards = g (fn _ => 1) (fn _ => 0)
 val count_wild_and_variable_lengths = g (fn _ => 1) String.size
 
 (* part c *)
-fun count_some_var (s,p) = g (fn _ => 1) (fn x => if x = s then 1 else 0) p
+fun count_some_var (s,p) = g (fn _ => 0) (fn x => if x = s then 1 else 0) p
 
 (* problem 10 *)
 fun check_pat p =
