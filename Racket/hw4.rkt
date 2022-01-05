@@ -36,7 +36,7 @@
     (lambda () (f 1))))
  
 ; question 6
-(define dan-the-dog
+(define dan-then-dog
   (letrec ([dan (lambda () (cons "dan.jpg" dog))]
            [dog (lambda () (cons "dog.jpg" dan))])
     (lambda () (dan))))
@@ -74,7 +74,7 @@
                       (cdr ans)
                       (let ([new-ans (assoc v xs)])
                         (if new-ans
-                            (begin (vector-set! cache pos (cons v new-ans))
+                            (begin (displayln cache)(vector-set! cache pos new-ans)
                                    (set! pos (remainder (+ pos 1) n))
                                    new-ans)
                             #f)))))])
