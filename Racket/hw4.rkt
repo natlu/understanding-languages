@@ -33,8 +33,7 @@
                                         (* y -1)
                                         y))]
            [f (lambda (x) (cons (funny-five x) (lambda () (f (+ x 1)))))])
-  (lambda () (f 1))))
-
+    (lambda () (f 1))))
  
 ; question 6
 (define dan-the-dog
@@ -54,11 +53,29 @@
                                 (lambda () (f (+ n 1)))))])
      (lambda () (f 0))))
            
-
 ; question 9
+(define (vector-assoc v vec)
+  (letrec ([f (lambda (n) (if (< n (vector-length vec))
+                              (if (pair? (vector-ref vec n))
+                                  (if (equal? (car (vector-ref vec n)) v)
+                                      (vector-ref vec n)
+                                      (f (+ n 1)))
+                                  (f (+ n 1)))
+                              #f))])
+  (f 0)))
 
-
-
-
-
-
+; question 10
+(define (cached-assoc xs n)
+  (letrec ([cache (make-vector n #f)]
+           [pos 0]
+           [f (lambda (v)
+                (let ([ans (vector-assoc v cache)])
+                  (if ans
+                      (cdr ans)
+                      (let ([new-ans (assoc v xs)])
+                        (if new-ans
+                            (begin (vector-set! cache pos (cons v new-ans))
+                                   (set! pos (remainder (+ pos 1) n))
+                                   new-ans)
+                            #f)))))])
+    f))
