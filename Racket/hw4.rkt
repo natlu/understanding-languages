@@ -71,11 +71,21 @@
            [f (lambda (v)
                 (let ([ans (vector-assoc v cache)])
                   (if ans
-                      (cdr ans)
+                      ans
                       (let ([new-ans (assoc v xs)])
                         (if new-ans
-                            (begin (displayln cache)(vector-set! cache pos new-ans)
+                            (begin (vector-set! cache pos new-ans)
                                    (set! pos (remainder (+ pos 1) n))
                                    new-ans)
                             #f)))))])
     f))
+
+; question 11
+(define-syntax while-less
+  (syntax-rules (do)
+    [(while-less e1 do e2)
+     (letrec ([expr1 e1]
+              [f (lambda ()
+                   (let ([e e2])
+                     (if (< e expr1) (f) #t)))])
+         (f))]))
